@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portal de Conteúdos Tecnológico</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; font-family: 'Orbitron', sans-serif; }
+  body { background: linear-gradient(135deg,#0f172a,#111827); color:#f1f5f9; min-height:100vh; }
+
+  header {
+    text-align:center; padding:3rem 1rem;
+    background: rgba(255,255,255,0.05); border-bottom:1px solid rgba(255,255,255,0.1);
+    box-shadow: 0 0 20px rgba(56, 189, 248,0.3);
+  }
+  header h1 { font-size:2.8rem; color:#38bdf8; text-shadow: 0 0 10px #38bdf8; }
+  header p { margin-top:0.5rem; font-size:1.2rem; color:#cbd5e1; }
+
+  .controls {
+    max-width: 1000px; margin: 2rem auto; padding:0 1rem;
+    display:flex; flex-wrap:wrap; gap:0.8rem; justify-content:center;
+  }
+  .controls input {
+    flex:1; min-width:200px; padding:0.6rem 1rem; border-radius:0.5rem;
+    border:none; outline:none; background: rgba(255,255,255,0.05); color:#f1f5f9;
+    box-shadow: 0 0 10px rgba(56, 189, 248,0.3); transition:0.3s;
+  }
+  .controls input:focus { box-shadow: 0 0 20px #38bdf8; }
+
+  .controls button {
+    padding:0.6rem 1rem; border:none; border-radius:0.5rem;
+    background: #38bdf8; color:#0f172a; font-weight:bold; cursor:pointer;
+    box-shadow: 0 0 10px #38bdf8; transition:0.3s;
+  }
+  .controls button:hover { background:#0ea5e9; box-shadow:0 0 20px #0ea5e9; }
+
+  main {
+    max-width:1000px; margin:2rem auto; padding:0 1rem;
+    display:grid; gap:1.5rem; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    opacity:0; transform: translateY(20px);
+    animation: fadeIn 1s forwards;
+  }
+  @keyframes fadeIn { to { opacity:1; transform: translateY(0); } }
+
+  .card {
+    background: rgba(255,255,255,0.05); padding:1.5rem; border-radius:1rem;
+    border:1px solid rgba(56,189,248,0.2);
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    position:relative; overflow:hidden;
+  }
+  .card::before {
+    content:""; position:absolute; top:-50%; left:-50%; width:200%; height:200%;
+    background: linear-gradient(45deg, #38bdf8, #0ea5e9, #3b82f6, #0ea5e9);
+    animation: rotate 6s linear infinite; opacity:0.1;
+  }
+  @keyframes rotate { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
+
+  .card:hover { transform: translateY(-10px) scale(1.03); box-shadow: 0 0 25px #38bdf8, 0 0 50px #0ea5e9, 0 0 70px #38bdf8; background: rgba(255,255,255,0.1); }
+
+  .card i { font-size:2rem; margin-bottom:1rem; display:block; }
+  .card h3 { font-size:1.3rem; margin-bottom:0.5rem; color:#f1f5f9; }
+  .card p { font-size:0.9rem; color:#cbd5e1; margin-bottom:1rem; }
+
+  .btn {
+    position:relative; overflow:hidden; display:inline-block; padding:0.6rem 1.2rem; 
+    background:#38bdf8; color:#0f172a; font-weight:bold; border-radius:0.5rem;
+    text-decoration:none; transition:0.3s; box-shadow: 0 0 10px #38bdf8;
+  }
+  .btn span { position:relative; z-index:1; }
+  .btn::after {
+    content: ""; position: absolute; top: 50%; left: 50%;
+    width: 0; height: 0; background: rgba(255,255,255,0.3);
+    border-radius: 50%; transform: translate(-50%, -50%);
+    transition: width 0.4s ease, height 0.4s ease; z-index:0;
+  }
+  .btn:active::after { width: 200%; height: 500%; transition:0s; }
+
+  footer { text-align:center; padding:1.5rem; margin-top:2rem; font-size:0.9rem; color:#94a3b8; }
+
+  @media(max-width:600px){ header h1 { font-size:2rem; } .controls { flex-direction: column; align-items:center; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Portal de Conteúdos Tecnológicos</h1>
+  <p>Baixe materiais e exercícios</p>
+</header>
+
+<section class="controls">
+  <input type="text" id="search" placeholder="Buscar material...">
+  <button onclick="filterCategory('all')">Todos</button>
+  <button onclick="filterCategory('excel')">Excel</button>
+  <button onclick="filterCategory('powerbi')">Power BI</button>
+  <button onclick="filterCategory('programacao')">Programação</button>
+</section>
+
+<main id="cards">
+  <div class="card" data-category="excel">
+    <i class="fas fa-file-excel" style="color:#16a34a;"></i>
+    <h3>Exercícios Excel</h3>
+    <p>Planilha com exercícios práticos.</p>
+    <a href="#" class="btn"><span>Baixar</span></a>
+  </div>
+
+  <div class="card" data-category="powerbi">
+    <i class="fas fa-chart-line" style="color:#facc15;"></i>
+    <h3>Dashboard Power BI</h3>
+    <p>Exemplo de relatório interativo.</p>
+    <a href="#" class="btn"<span>Baixar</span></a>
+  </div>
+
+  <div class="card" data-category="programacao">
+    <i class="fas fa-book" style="color:#3b82f6;"></i>
+    <h3>Exercícios de Python</h3>
+    <p>Lista de exercícios.</p>
+    <a href="#" class="btn"><span>Baixar</span></a>
+  </div>
+
+  <div class="card" data-category="programacao">
+    <i class="fas fa-code" style="color:#a855f7;"></i>
+    <h3>Exercícios de Lógica</h3>
+    <p>Lista de exercícios em PDF.</p>
+    <a href="#" class="btn"><span>Baixar</span></a>
+  </div>
+</main>
+
+<footer>
+  <p>© 2025 - Portal de Conteúdos | Prof. Marcos Nunes</p>
+</footer>
+
+<script>
+  const searchInput = document.getElementById('search');
+  const cards = document.querySelectorAll('.card');
+
+  // Filtro por busca
+  searchInput.addEventListener('input', () => {
+    const term = searchInput.value.toLowerCase();
+    cards.forEach(card => {
+      const title = card.querySelector('h3').textContent.toLowerCase();
+      const desc = card.querySelector('p').textContent.toLowerCase();
+      card.style.display = (title.includes(term) || desc.includes(term)) ? "block" : "none";
+    });
+  });
+
+  // Filtro por categoria
+  function filterCategory(category) {
+    cards.forEach(card => {
+      if (category === "all" || card.dataset.category === category) card.style.display = "block";
+      else card.style.display = "none";
+    });
+  }
+</script>
+
+</body>
+</html>
